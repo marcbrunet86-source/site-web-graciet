@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maison Graciet - �tude de March�</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #1a4d3e;
+            --primary-light: #2d5a47;
+            --primary-dark: #0f2e25;
+            --accent: #c9a227;
+            --accent-light: #e6c65c;
+            --text: #2c3e50;
+            --text-light: #5a6c7d;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        nav.scrolled {
+            padding: 0.7rem 5%;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(26, 77, 62, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.9rem;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            color: var(--white);
+            z-index: 10;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero h1 span {
+            color: var(--accent-light);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator i {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Company Intro */
+        .company-intro {
+            background: var(--white);
+        }
+
+        .intro-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .intro-image {
+            position: relative;
+        }
+
+        .intro-image-main {
+            width: 100%;
+            height: 400px;
+            background: var(--gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-image-main::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(255, 255, 255, 0.1), transparent 30%);
+            animation: rotate 8s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .intro-image-main i {
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+        }
+
+        .intro-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .intro-badge-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .intro-badge-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .intro-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-content p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .intro-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .intro-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .intro-feature i {
+            width: 35px;
+            height: 35px;
+            background: rgba(26, 77, 62, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+
+        .intro-feature span {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* Cards */
+        .cards-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(26, 77, 62, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .card:hover .card-icon {
+            background: var(--primary);
+        }
+
+        .card-icon i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: color 0.4s ease;
+        }
+
+        .card:hover .card-icon i {
+            color: var(--white);
+        }
+
+        .card h4 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Target Section */
+        .target-section {
+            background: var(--white);
+        }
+
+        .target-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .target-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .target-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(26, 77, 62, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .target-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(26, 77, 62, 0.1);
+        }
+
+        .target-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .target-card-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .target-card-icon i {
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        .target-card h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .target-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .target-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .target-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .target-list li:last-child {
+            border-bottom: none;
+        }
+
+        .target-list i {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        /* Pricing Table */
+        .pricing-section {
+            background: linear-gradient(180deg, var(--bg) 0%, var(--white) 100%);
+        }
+
+        .pricing-table {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .pricing-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+            background: var(--gradient);
+            color: var(--white);
+            padding: 1.5rem 2rem;
+            font-weight: 600;
+        }
+
+        .pricing-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .pricing-row:hover {
+            background: rgba(26, 77, 62, 0.03);
+        }
+
+        .pricing-row:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-service {
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .pricing-service i {
+            color: var(--accent);
+        }
+
+        .pricing-price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            background: var(--white);
+        }
+
+        .charts-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .chart-container {
+            background: var(--bg);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Competitor Analysis */
+        .competitor-section {
+            background: linear-gradient(180deg, var(--bg) 0%, var(--white) 100%);
+        }
+
+        .competitor-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .competitor-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+
+        .competitor-card.featured {
+            border-color: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(201, 162, 39, 0.2);
+        }
+
+        .competitor-card:hover:not(.featured) {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .competitor-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .competitor-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .competitor-share {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .competitor-bar {
+            height: 8px;
+            background: var(--bg);
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .competitor-bar-fill {
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* SWOT Section */
+        .swot-section {
+            background: var(--white);
+        }
+
+        .swot-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .swot-card {
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .swot-card:hover {
+            transform: scale(1.02);
+        }
+
+        .swot-strengths {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
+
+        .swot-weaknesses {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        }
+
+        .swot-opportunities {
+            background: linear-gradient(135deg, #cce5ff 0%, #b8daff 100%);
+        }
+
+        .swot-threats {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+        }
+
+        .swot-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .swot-header i {
+            font-size: 1.5rem;
+        }
+
+        .swot-strengths .swot-header i { color: #155724; }
+        .swot-weaknesses .swot-header i { color: #721c24; }
+        .swot-opportunities .swot-header i { color: #004085; }
+        .swot-threats .swot-header i { color: #856404; }
+
+        .swot-header h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .swot-strengths .swot-header h4 { color: #155724; }
+        .swot-weaknesses .swot-header h4 { color: #721c24; }
+        .swot-opportunities .swot-header h4 { color: #004085; }
+        .swot-threats .swot-header h4 { color: #856404; }
+
+        .swot-list {
+            list-style: none;
+        }
+
+        .swot-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .swot-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .swot-strengths .swot-list li::before { background: #155724; }
+        .swot-weaknesses .swot-list li::before { background: #721c24; }
+        .swot-opportunities .swot-list li::before { background: #004085; }
+        .swot-threats .swot-list li::before { background: #856404; }
+
+        /* Team Section */
+        .team-section {
+            background: var(--bg);
+        }
+
+        .team-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .team-card {
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-avatar {
+            width: 150px;
+            height: 150px;
+            background: var(--gradient);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(255, 255, 255, 0.2), transparent 30%);
+            animation: rotate 5s linear infinite;
+        }
+
+        .team-avatar i {
+            z-index: 1;
+        }
+
+        .team-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .team-role {
+            color: var(--accent);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* Conclusion */
+        .conclusion-section {
+            background: var(--gradient);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .conclusion-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .conclusion-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .conclusion-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .conclusion-highlight {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .conclusion-highlight h4 {
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: var(--white);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-text {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        .footer-address {
+            margin-top: 1rem;
+            opacity: 0.7;
+            font-size: 0.85rem;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .intro-grid,
+            .target-grid,
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .swot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-header,
+            .pricing-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .intro-badge {
+                position: static;
+                margin-top: 1.5rem;
+            }
+
+            .team-grid {
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-gem"></i>
+                Maison <span>Graciet</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#intro">Entreprise</a></li>
+                <li><a href="#demande">Demande</a></li>
+                <li><a href="#offre">Offre</a></li>
+                <li><a href="#concurrence">Concurrence</a></li>
+                <li><a href="#environnement">Environnement</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-chart-line"></i> Analyse Strategique 2025
+            </div>
+            <h1>Etude de Marche<br><span>Maison Graciet</span></h1>
+            <p class="hero-subtitle">
+                Agence web & web-marketing specialisee dans la creation de sites WordPress
+                et le referencement SEO a Poitiers
+            </p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">30%</div>
+                    <div class="stat-label">Part de Marche</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Services Cles</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">N°1</div>
+                    <div class="stat-label">Position Locale</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Company Introduction -->
+    <section class="company-intro" id="intro">
+        <div class="intro-grid">
+            <div class="intro-image slide-in-left">
+                <div class="intro-image-main">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="intro-badge">
+                    <div class="intro-badge-number">100%</div>
+                    <div class="intro-badge-text">Sur-mesure</div>
+                </div>
+            </div>
+            <div class="intro-content slide-in-right">
+                <h3>L'Excellence Digitale a Votre Service</h3>
+                <p>
+                    Situee au 6 rue Albin Haller, 86000 Poitiers, en Nouvelle-Aquitaine,
+                    <strong>Maison Graciet</strong> est une agence web specialisee dans la creation
+                    de sites web WordPress et le referencement SEO.
+                </p>
+                <p>
+                    Notre mission : accompagner nos clients dans leur strategie numerique avec
+                    une approche personnalisee et des resultats concrets.
+                </p>
+                <div class="intro-features">
+                    <div class="intro-feature">
+                        <i class="fas fa-check"></i>
+                        <span>WordPress Expert</span>
+                    </div>
+                    <div class="intro-feature">
+                        <i class="fas fa-check"></i>
+                        <span>SEO Avance</span>
+                    </div>
+                    <div class="intro-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Formation Pro</span>
+                    </div>
+                    <div class="intro-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Suivi Long Terme</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Etude de la Demande -->
+    <section id="demande">
+        <div class="section-header fade-in">
+            <span class="section-label">Partie I</span>
+            <h2 class="section-title">L'Etude de la Demande</h2>
+            <p class="section-desc">
+                Analyse approfondie de notre clientele cible et de leurs besoins specifiques
+            </p>
+        </div>
+        <div class="cards-grid">
+            <div class="card fade-in">
+                <div class="card-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h4>Zone de Chalandise Principale</h4>
+                <p>
+                    Clientele locale et regionale : Poitiers, Vienne, Nouvelle-Aquitaine.
+                    Des acteurs cherchant un service personnalise et une relation de proximite.
+                </p>
+            </div>
+            <div class="card fade-in">
+                <div class="card-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h4>Zone de Chalandise Secondaire</h4>
+                <p>
+                    Extension nationale avec des clients sur toute la France.
+                    Des entreprises pouvant collaborer a distance pour le web et le SEO.
+                </p>
+            </div>
+            <div class="card fade-in">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h4>Types de Clients</h4>
+                <p>
+                    TPE/PME, independants, commercants, associations et institutions
+                    de l'agglomeration de Poitiers et au-dela.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analyse Clients -->
+    <section class="target-section">
+        <div class="target-content">
+            <div class="section-header fade-in">
+                <span class="section-label">Comportement Client</span>
+                <h2 class="section-title">Analyse des Clients</h2>
+            </div>
+            <div class="target-grid">
+                <div class="target-card fade-in">
+                    <div class="target-card-header">
+                        <div class="target-card-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>Motivations</h4>
+                    </div>
+                    <ul class="target-list">
+                        <li><i class="fas fa-check-circle"></i> Accompagnement professionnel et personnalise</li>
+                        <li><i class="fas fa-check-circle"></i> Qualite et fiabilite des services</li>
+                        <li><i class="fas fa-check-circle"></i> Resultats concrets en visibilite et trafic</li>
+                        <li><i class="fas fa-check-circle"></i> Construction d'un patrimoine numerique durable</li>
+                    </ul>
+                </div>
+                <div class="target-card fade-in">
+                    <div class="target-card-header">
+                        <div class="target-card-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h4>Freins Potentiels</h4>
+                    </div>
+                    <ul class="target-list">
+                        <li><i class="fas fa-times-circle"></i> Cout eleve et investissement long terme</li>
+                        <li><i class="fas fa-times-circle"></i> Complexite du web et du SEO pour novices</li>
+                        <li><i class="fas fa-times-circle"></i> Necessite d'un engagement actif</li>
+                        <li><i class="fas fa-times-circle"></i> Dependance a un prestataire externe</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offre de l'entreprise -->
+    <section class="pricing-section" id="offre">
+        <div class="section-header fade-in">
+            <span class="section-label">Partie II</span>
+            <h2 class="section-title">L'Etude de l'Offre</h2>
+            <p class="section-desc">
+                Notre gamme de services et notre positionnement tarifaire
+            </p>
+        </div>
+        <div class="pricing-table fade-in">
+            <div class="pricing-header">
+                <div>Service</div>
+                <div>Prix</div>
+                <div>Distribution</div>
+                <div>Promotion</div>
+            </div>
+            <div class="pricing-row">
+                <div class="pricing-service">
+                    <i class="fas fa-globe"></i>
+                    Site Web
+                </div>
+                <div class="pricing-price">5k - 100k EUR</div>
+                <div>Via notre site web</div>
+                <div>Bouche-a-oreille</div>
+            </div>
+            <div class="pricing-row">
+                <div class="pricing-service">
+                    <i class="fas fa-graduation-cap"></i>
+                    Formation
+                </div>
+                <div class="pricing-price">~1 000 EUR/jour</div>
+                <div>Via notre site web</div>
+                <div>Bouche-a-oreille</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="charts-section" id="concurrence">
+        <div class="section-header fade-in">
+            <span class="section-label">Analyse Concurrentielle</span>
+            <h2 class="section-title">Parts de Marche & Positionnement</h2>
+        </div>
+        <div class="charts-grid">
+            <div class="chart-container fade-in">
+                <h4 class="chart-title">Repartition des Parts de Marche</h4>
+                <canvas id="marketShareChart"></canvas>
+            </div>
+            <div class="chart-container fade-in">
+                <h4 class="chart-title">Comparatif Prix / Qualite</h4>
+                <canvas id="positioningChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competitors -->
+    <section class="competitor-section">
+        <div class="section-header fade-in">
+            <span class="section-label">Benchmark</span>
+            <h2 class="section-title">Nos Concurrents Directs</h2>
+        </div>
+        <div class="competitor-grid">
+            <div class="competitor-card featured fade-in">
+                <span class="competitor-badge">Leader</span>
+                <div class="competitor-name">Maison Graciet</div>
+                <div class="competitor-share">30%</div>
+                <div class="competitor-bar">
+                    <div class="competitor-bar-fill" style="width: 100%"></div>
+                </div>
+            </div>
+            <div class="competitor-card fade-in">
+                <div class="competitor-name">Inapercu</div>
+                <div class="competitor-share">25%</div>
+                <div class="competitor-bar">
+                    <div class="competitor-bar-fill" style="width: 83%"></div>
+                </div>
+            </div>
+            <div class="competitor-card fade-in">
+                <div class="competitor-name">Les Comnambules</div>
+                <div class="competitor-share">20%</div>
+                <div class="competitor-bar">
+                    <div class="competitor-bar-fill" style="width: 66%"></div>
+                </div>
+            </div>
+            <div class="competitor-card fade-in">
+                <div class="competitor-name">CoDesign</div>
+                <div class="competitor-share">15%</div>
+                <div class="competitor-bar">
+                    <div class="competitor-bar-fill" style="width: 50%"></div>
+                </div>
+            </div>
+            <div class="competitor-card fade-in">
+                <div class="competitor-name">Agence Web Heros</div>
+                <div class="competitor-share">10%</div>
+                <div class="competitor-bar">
+                    <div class="competitor-bar-fill" style="width: 33%"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SWOT Analysis -->
+    <section class="swot-section" id="environnement">
+        <div class="section-header fade-in">
+            <span class="section-label">Partie III</span>
+            <h2 class="section-title">Diagnostic Strategique</h2>
+            <p class="section-desc">Forces, faiblesses, opportunites et menaces</p>
+        </div>
+        <div class="swot-grid">
+            <div class="swot-card swot-strengths fade-in">
+                <div class="swot-header">
+                    <i class="fas fa-plus-circle"></i>
+                    <h4>Forces</h4>
+                </div>
+                <ul class="swot-list">
+                    <li>Expertise creative et proximite client</li>
+                    <li>Image de marque artisanale identifiable</li>
+                    <li>Couts fixes faibles (petite structure)</li>
+                    <li>Maitrise des outils digitaux et graphiques</li>
+                    <li>Approche sur-mesure et personnalisee</li>
+                </ul>
+            </div>
+            <div class="swot-card swot-weaknesses fade-in">
+                <div class="swot-header">
+                    <i class="fas fa-minus-circle"></i>
+                    <h4>Faiblesses</h4>
+                </div>
+                <ul class="swot-list">
+                    <li>Petite equipe = capacite limitee mais possibilité d'appel à des externes de qualité (réseau)</li>
+                    <li>Capacite d'investissement limitee</li>
+                    <li>Difficulte a atteindre grands comptes</li>
+                </ul>
+            </div>
+            <div class="swot-card swot-opportunities fade-in">
+                <div class="swot-header">
+                    <i class="fas fa-lightbulb"></i>
+                    <h4>Opportunites</h4>
+                </div>
+                <ul class="swot-list">
+                    <li>Aides publiques pour la digitalisation</li>
+                    <li>Hausse des entreprises a digitaliser</li>
+                    <li>Outils digitaux plus puissants (IA, CRM)</li>
+                    <li>Forte demande en marketing digital</li>
+                    <li>Sensibilite croissante a la communication RSE</li>
+                </ul>
+            </div>
+            <div class="swot-card swot-threats fade-in">
+                <div class="swot-header">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h4>Menaces</h4>
+                </div>
+                <ul class="swot-list">
+                    <li>Concurrence elevee et clients sollicites</li>
+                    <li>IA et solutions automatisees low-cost</li>
+                    <li>Evolution technologique rapide</li>
+                    <li>Conjoncture economique incertaine</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="section-header fade-in">
+            <span class="section-label">L'Equipe</span>
+            <h2 class="section-title">Notre Organisation</h2>
+        </div>
+        <div class="team-grid">
+            <div class="team-card fade-in">
+                <div class="team-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div class="team-name">Stephane Graciet</div>
+                <div class="team-role">Patron - Fondateur</div>
+            </div>
+            <div class="team-card fade-in">
+                <div class="team-avatar">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="team-name">Manon Delcambre</div>
+                <div class="team-role">Chef de Projet</div>
+            </div>
+            <div class="team-card fade-in">
+                <div class="team-avatar">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="team-name">Valentin Charrier</div>
+                <div class="team-role">Developpeur</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section class="conclusion-section" id="conclusion">
+        <div class="conclusion-content fade-in">
+            <h2>Conclusion & Perspectives</h2>
+            <p>
+                Cette etude de marche revele que <strong>Maison Graciet</strong> occupe une
+                position de leader sur le marche local avec <strong>30% de part de marche</strong>.
+                Son positionnement premium, base sur l'expertise, la proximite client et
+                l'accompagnement personnalise, constitue un avantage concurrentiel majeur.
+            </p>
+            <div class="conclusion-highlight">
+                <h4>Decision Strategique Cle</h4>
+                <p>
+                    Le developpement d'un chatbot avec les outils Ocade et N8N illustre la capacite
+                    de Maison Graciet a innover. Cette initiative renforce ses competences technologiques
+                    et ouvre la voie a de nouvelles offres porteuses de valeur.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">
+            <i class="fas fa-gem"></i> Maison <span>Graciet</span>
+        </div>
+        <p class="footer-text">Agence Web & Web-Marketing - Poitiers</p>
+        <p class="footer-address">
+            <i class="fas fa-map-marker-alt"></i> 6 rue Albin Haller, 86000 Poitiers, Nouvelle-Aquitaine
+        </p>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            particle.style.width = (5 + Math.random() * 10) + 'px';
+            particle.style.height = particle.style.width;
+            particlesContainer.appendChild(particle);
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Market Share Chart
+        const marketShareCtx = document.getElementById('marketShareChart').getContext('2d');
+        new Chart(marketShareCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Maison Graciet', 'Inapercu', 'Les Comnambules', 'CoDesign', 'Agence Web Heros'],
+                datasets: [{
+                    data: [30, 25, 20, 15, 10],
+                    backgroundColor: [
+                        '#1a4d3e',
+                        '#2d7a5a',
+                        '#4a9d7a',
+                        '#7bc0a8',
+                        '#b8ddd0'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true,
+                            font: {
+                                family: 'Inter',
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+
+        // Positioning Chart (Scatter)
+        const positioningCtx = document.getElementById('positioningChart').getContext('2d');
+        new Chart(positioningCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Maison Graciet',
+                    data: [{ x: 85, y: 90 }],
+                    backgroundColor: '#c9a227',
+                    pointRadius: 15,
+                    pointHoverRadius: 18
+                }, {
+                    label: 'Inapercu',
+                    data: [{ x: 45, y: 80 }],
+                    backgroundColor: '#2d7a5a',
+                    pointRadius: 12,
+                    pointHoverRadius: 15
+                }, {
+                    label: 'Les Comnambules',
+                    data: [{ x: 60, y: 40 }],
+                    backgroundColor: '#4a9d7a',
+                    pointRadius: 10,
+                    pointHoverRadius: 13
+                }, {
+                    label: 'CoDesign',
+                    data: [{ x: 70, y: 35 }],
+                    backgroundColor: '#7bc0a8',
+                    pointRadius: 10,
+                    pointHoverRadius: 13
+                }, {
+                    label: 'Agence Web Heros',
+                    data: [{ x: 25, y: 30 }],
+                    backgroundColor: '#b8ddd0',
+                    pointRadius: 8,
+                    pointHoverRadius: 11
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    x: {
+                        min: 0,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Prix',
+                            font: {
+                                family: 'Inter',
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0,0,0,0.05)'
+                        }
+                    },
+                    y: {
+                        min: 0,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Qualite / Expertise',
+                            font: {
+                                family: 'Inter',
+                                weight: 'bold'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(0,0,0,0.05)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            usePointStyle: true,
+                            font: {
+                                family: 'Inter',
+                                size: 11
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // Animate competitor bars on scroll
+        const competitorBars = document.querySelectorAll('.competitor-bar-fill');
+        const barsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.style.width;
+                    entry.target.style.width = '0';
+                    setTimeout(() => {
+                        entry.target.style.width = width;
+                    }, 100);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        competitorBars.forEach(bar => barsObserver.observe(bar));
+    </script>
+</body>
+</html>
